@@ -1,0 +1,18 @@
+AllCops:
+  TargetRubyVersion: 2.7.0
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'bin/*'
+    - 'config/**/*'
+    - 'node_modules/**/*'
+    - 'Gemfile'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
