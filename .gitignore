@@ -39,5 +39,5 @@
 yarn-debug.log*
 .yarn-integrity
 .idea/*
-competency_development
-competency_test
+competency_development*
+competency_test*
