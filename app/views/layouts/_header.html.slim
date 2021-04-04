@@ -1,0 +1,15 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container
+    .navbar-header
+      ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+        li
+          = link_to "Home", root_path, class: 'navbar-brand'
+    ul.nav.justify-content-end
+      -if @current_user
+        li.nav-item
+          = link_to "Edit Profile", edit_user_registration_path(current_user), class: 'nav-link text-white'
+        li.nav-item
+          = link_to "Log Out", destroy_user_session_path, method: :delete, class: 'nav-link text-white'
+      -else
+        li
+          = link_to "Log In", user_session_path
