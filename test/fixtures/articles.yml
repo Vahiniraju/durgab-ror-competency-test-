@@ -4,10 +4,16 @@ one:
   title: MyString
   content: MyText
   category: politics
-  user: one
+  user: editor
 
 two:
   title: MyString
   content: MyText
-  category: sports
-  user: two
+  category: politics
+  user: editor
+
+editor2_article:
+  title: MyString
+  content: MyText
+  category: politics
+  user: editor2

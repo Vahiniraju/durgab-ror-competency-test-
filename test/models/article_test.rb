@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ArticleTest < ActiveSupport::TestCase
   test 'article cannot be saved when title is nil' do
@@ -34,7 +34,7 @@ class ArticleTest < ActiveSupport::TestCase
     article.category_id = Category.maximum(:id) + 1
     refute(article.save)
     assert_includes article.errors.full_messages, 'Category must exist'
-    end
+  end
 
   test 'have error when category is not assigned to article' do
     article = articles(:one)

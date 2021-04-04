@@ -12,7 +12,7 @@ def create_users
     { email: 'editor1@xyz.com', password: 'password', password_confirmation: 'password', role: 'editor' },
     { email: 'editor2@xyz.com', password: 'password', password_confirmation: 'password', role: 'editor' },
     { email: 'editor3@xyz.com', password: 'password', password_confirmation: 'password', role: 'editor' },
-    { email: 'amdin@xyz.com', password: 'password', password_confirmation: 'password', role: 'admin' },
+    { email: 'admin@xyz.com', password: 'password', password_confirmation: 'password', role: 'admin' }
   ]
 
   users.each do |user|
@@ -28,7 +28,7 @@ def create_categories
   categories = [
     { name: 'politics' },
     { name: 'general' },
-    { name: 'sports' },
+    { name: 'sports' }
   ]
 
   Category.create(categories)
@@ -44,7 +44,7 @@ def create_articles
   articles = [
     { title: 'PoliticsName', content: 'PoliticsContent', category_id: category_ids[0] },
     { title: 'SportsName', content: 'SportsContent', category_id: category_ids[1] },
-    { title: 'GeneralName', content: 'GeneralContent', category_id: category_ids[2] },
+    { title: 'GeneralName', content: 'GeneralContent', category_id: category_ids[2] }
   ]
 
   editors.each do |editor|

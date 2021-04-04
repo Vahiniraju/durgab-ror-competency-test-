@@ -7,6 +7,9 @@ AllCops:
     - 'config/**/*'
     - 'node_modules/**/*'
     - 'Gemfile'
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+    - 'db/migrate/*'
 
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -16,3 +19,11 @@ Documentation:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - test/**/*
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
