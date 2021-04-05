@@ -61,4 +61,29 @@ class ArticleTest < ActiveSupport::TestCase
     article = articles(:one)
     assert article
   end
+
+  test 'default scope' do
+    article = Article.find_by_id(articles(:archived).id)
+    assert article.nil?, true
+  end
+
+  test 'respond to user_email' do
+    article = articles(:one)
+    assert_equal article.user_email, article.user.email
+  end
+
+  test 'respond to category_name' do
+    article = articles(:one)
+    assert_equal article.category_name, article.category.name
+  end
+
+  test 'respond to category' do
+    article = articles(:one)
+    assert_equal article.category.class, Category
+  end
+
+  test 'respond to user' do
+    article = articles(:one)
+    assert_equal article.user.class, User
+  end
 end

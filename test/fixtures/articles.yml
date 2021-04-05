@@ -35,3 +35,10 @@ politics:
   content: MyText
   category: politics
   user: editor2
+
+archived:
+  title: MyString
+  content: MyText
+  category: politics
+  user: editor2
+  archived: true
