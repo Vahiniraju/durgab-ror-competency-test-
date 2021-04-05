@@ -41,3 +41,5 @@ yarn-debug.log*
 .idea/*
 competency_development*
 competency_test*
+.env
+.rbenv

@@ -1,0 +1,11 @@
+p
+  | Hello
+  = @user.email
+  | !
+p
+  | New User account has been created for this email, You can set password using forgot password link below
+p
+  = link_to "Request password Change", new_password_url(@user)
+
+p
+  | If you didn't request this, please ignore this email.

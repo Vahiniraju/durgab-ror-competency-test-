@@ -70,7 +70,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
     test "#{user} cannot create article" do
       sign_in users(user)
-      post articles_url, params: { article: { title: 'updated', content: 'xyz', category_id: categories(:sports).id } }
+      post articles_path, params: { article: { title: 'updated', content: 'xyz', category_id: categories(:sports).id } }
       assert_equal 'Permission Denied', flash[:notice]
       assert_redirected_to root_path
     end
@@ -110,6 +110,26 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'xyz', article.content
     assert_equal 'updated', article.title
     assert_equal categories(:sports).id, article.category_id
+  end
+
+  test 'when editor tries to create article' do
+    sign_in users(:editor)
+    post articles_path, params: { article: { title: 'updated', content: 'xyz',
+                                             category_id: categories(:sports).id } }
+    article = controller.instance_variable_get(:@article)
+    assert_redirected_to article_url(article)
+    assert_equal 'Article was successfully created.', flash[:success]
+    assert_equal 'xyz', article.content
+    assert_equal 'updated', article.title
+    assert_equal categories(:sports).id, article.category_id
+  end
+
+  test 'create article should increase article count' do
+    sign_in users(:editor)
+    assert_difference -> { Article.count } => 1 do
+      post articles_path, params: { article: { title: 'updated', content: 'xyz',
+                                               category_id: categories(:sports).id } }
+    end
   end
 
   test 'when editor tries to update article of their own with improper params' do

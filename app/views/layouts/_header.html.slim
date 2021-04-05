@@ -4,6 +4,11 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       ul.navbar-nav.mr-auto.mt-2.mt-lg-0
         li
           = link_to "Home", root_path, class: 'navbar-brand'
+    -if logged_in?(:admin)
+      .collapse.navbar-collapse#navbarText
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            = link_to 'Users', admin_users_path, class: 'nav-link text-white'
     ul.nav.justify-content-end
       -if @current_user
         li.nav-item

@@ -12,4 +12,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
   has_many :articles
+
+  def set_password
+    hex = SecureRandom.hex(10)
+    self.password = self.password_confirmation = hex
+  end
 end

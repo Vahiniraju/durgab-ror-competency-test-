@@ -1,0 +1,10 @@
+= form_with(model: user, local: true, url: url) do |form|
+  = render "shared/error_messages", resource: user
+  .field
+    = form.label :email
+    = form.text_field :email
+  .field
+    = form.label :roles, 'Role'
+    = form.select :roles, options_for_roles(user)
+  .actions
+    = form.submit
