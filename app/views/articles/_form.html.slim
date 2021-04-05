@@ -1,13 +1,15 @@
-= form_with(model: article, local: true) do |form|
-  = render "shared/error_messages", resource: article
-  .field
-    = form.label :title
-    = form.text_field :title
-  .field
-    = form.label :category_id, 'Category'
-    = form.select :category_id, options_for_category(article.category)
-  .field
-    = form.label :content
-    = form.text_area :content
-  .actions
-    = form.submit
+.card-body
+  = form_with(model: article, local: true) do |form|
+    = render "shared/error_messages", resource: article
+    .form-group
+      = form.label :title
+      = form.text_field :title, class: 'form-control', maxlength: 25
+    .form-group
+      = form.label :category_id, 'Category'
+      = form.select :category_id, options_for_category(article.category), {} ,class: 'custom-select'
+    .form-group
+      = form.label :content
+      = form.text_area :content, class: 'form-control'
+    .form-check
+      = link_to "Cancel", articles_path, class: "btn btn-danger float-left", type: 'button'
+      = form.submit 'Submit', class: 'btn btn-primary float-right'

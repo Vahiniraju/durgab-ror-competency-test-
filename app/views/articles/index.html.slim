@@ -1,14 +1,17 @@
-h1 Articles
--if @can_create_articles
-  = link_to 'Create Article', new_article_path
-table
+.card
+  .card-header
+    strong Articles
+    -if @can_create_articles
+      .float-right
+        = link_to 'Create Article', new_article_path
+table.table
   thead
     tr
-      th Title
-      th Content
-      th Category
-      th User
-      th colspan="4"
+      th scope='col' Title
+      th scope='col' Content
+      th scope='col' Category
+      th scope='col' User
+      th scope='col' colspan="4"
   tbody
     - @articles.each do |article|
       tr
