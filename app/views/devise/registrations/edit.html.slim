@@ -15,6 +15,10 @@
           | Currently waiting confirmation for:
           = resource.unconfirmed_email
       .form-group
+        = f.label :name
+        br
+        = f.text_field :name, autofocus: true, class: 'form-control'
+      .form-group
         = f.label :password
         i
           | (leave blank if you don't want to change it)

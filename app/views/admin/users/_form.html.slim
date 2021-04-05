@@ -4,6 +4,9 @@
     = form.label :email
     = form.text_field :email, class: 'form-control'
   .form-group
+    = form.label :name
+    = form.text_field :name, class: 'form-control'
+  .form-group
     = form.label :roles, 'Role'
     = form.select :roles, options_for_roles(user), {}, class: 'form-control'
   .form-group

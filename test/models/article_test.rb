@@ -67,6 +67,11 @@ class ArticleTest < ActiveSupport::TestCase
     assert article.nil?, true
   end
 
+  test 'respond to user_name' do
+    article = articles(:one)
+    assert_equal article.user_name, article.user.name
+  end
+
   test 'respond to user_email' do
     article = articles(:one)
     assert_equal article.user_email, article.user.email

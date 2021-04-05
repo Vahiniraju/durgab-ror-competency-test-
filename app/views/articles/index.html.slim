@@ -18,7 +18,7 @@ table.table
         td= article.title
         td= article.content
         td= article.category_name
-        td= article.user_email
+        td= article.user_name
         td= link_to 'Show', article
         -if logged_in?(:admin)
           td= link_to 'Archive', admin_archive_article_path(article.id), method: :post,

@@ -8,31 +8,37 @@ one:
   email: foo@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
+  name: FooName
 #
 two:
   email: bar@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
+  name: BarName
 #
 editor:
   email: editor@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   roles: editor
   confirmed_at: <%= Time.now %>
+  name: EditorName
 #
 editor2:
   email: editor2@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   roles: editor
   confirmed_at: <%= Time.now %>
+  name: Editor2Name
 #
 admin:
   email: admin@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   roles: admin
   confirmed_at: <%= Time.now %>
+  name: Adminname
 #
 user:
   email: user@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
+  name: Username

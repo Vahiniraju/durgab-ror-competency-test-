@@ -8,11 +8,15 @@
 
 def create_users
   users = [
-    { email: 'foo@example.com', password: 'password', password_confirmation: 'password' },
-    { email: 'editor1@example.com', password: 'password', password_confirmation: 'password', role: 'editor' },
-    { email: 'editor2@example.com', password: 'password', password_confirmation: 'password', role: 'editor' },
-    { email: 'editor3@example.com', password: 'password', password_confirmation: 'password', role: 'editor' },
-    { email: 'admin@example.com', password: 'password', password_confirmation: 'password', role: 'admin' }
+    { email: 'foo@example.com', password: 'password', password_confirmation: 'password', name: 'John Doe' },
+    { email: 'editor1@example.com', password: 'password', password_confirmation: 'password', role: 'editor',
+      name: 'John Editor' },
+    { email: 'editor2@example.com', password: 'password', password_confirmation: 'password', role: 'editor',
+      name: 'John Editor2' },
+    { email: 'editor3@example.com', password: 'password', password_confirmation: 'password', role: 'editor',
+      name: 'John Editor3' },
+    { email: 'admin@example.com', password: 'password', password_confirmation: 'password', role: 'admin',
+      name: 'John Admin' }
   ]
 
   users.each do |user|
@@ -42,16 +46,19 @@ def create_articles
   raise '3 editors not found' unless editors.count == 3
 
   articles = [
-    { title: 'US house rules', content: 'Branches of Government', category_id: category_ids[0], user_id: editors[0].id },
+    { title: 'US house rules', content: 'Branches of Government', category_id: category_ids[0],
+      user_id: editors[0].id },
     { title: 'PickleBall', content: 'The new Short Tennis', category_id: category_ids[1], user_id: editors[0].id },
     { title: 'Tip of the day', content: 'General Information', category_id: category_ids[2], user_id: editors[0].id },
-    { title: 'Elections in Senate', content: 'Mid Term Elections', category_id: category_ids[0], user_id: editors[1].id },
+    { title: 'Elections in Senate', content: 'Mid Term Elections', category_id: category_ids[0],
+      user_id: editors[1].id },
     { title: 'March Madness', content: 'NCAA Tournament', category_id: category_ids[1], user_id: editors[1].id },
     { title: 'Daily Routine', content: 'General Information', category_id: category_ids[2], user_id: editors[1].id },
     { title: 'Governor Races', content: 'Elections', category_id: category_ids[0], user_id: editors[2].id },
     { title: 'Baseball starts', content: 'MLB in covid times', category_id: category_ids[1], user_id: editors[2].id },
     { title: 'Online shopping', content: 'General Information', category_id: category_ids[2], user_id: editors[2].id },
-    { title: 'NBA 2022 Contenders', content: 'Basketball in Fall', category_id: category_ids[1], user_id: editors[2].id }
+    { title: 'NBA 2022 Contenders', content: 'Basketball in Fall', category_id: category_ids[1],
+      user_id: editors[2].id }
   ]
 
   Article.create(articles)

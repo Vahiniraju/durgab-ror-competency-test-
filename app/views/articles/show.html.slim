@@ -20,7 +20,7 @@
       .col-2
         strong Category :
       .col-10
-        = @article.category.name
+        = @article.category_name
     .row.form-group
       .col-2
         strong Content :
@@ -30,5 +30,5 @@
       .col-2
         strong By User :
       .col-10
-        = @article.user.email
+        = @article.user_name
     =link_to 'Back to Articles', articles_path

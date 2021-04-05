@@ -18,7 +18,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       -if @current_user
         li.nav-item
           span.nav-link.text-white
-            = "User: #{current_user.email}"
+            = "User: #{current_user.name}"
         li.nav-item
           = link_to "Edit Profile", edit_user_registration_path(current_user), class: 'nav-link text-white'
         li.nav-item

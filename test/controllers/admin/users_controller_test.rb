@@ -26,7 +26,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
 
     test "#{user} create action should throw permission denied" do
       sign_in users(:user)
-      post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
+      post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor', name: 'Foobar' } }
       assert_equal 'Permission Denied', flash[:notice]
       assert_redirect root_path
     end
@@ -34,7 +34,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     test "#{user} update action should throw permission denied" do
       local_user = users(user)
       sign_in local_user
-      patch admin_user_url(local_user), params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
+      patch admin_user_url(local_user), params: { user: { email: 'xyz@abc.com', roles: 'editor', name: 'Foobar' } }
       assert_equal 'Permission Denied', flash[:notice]
       assert_redirect root_path
     end
@@ -68,14 +68,14 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create action should throw permission denied when user not signed_in' do
-    post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
+    post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor', name: 'Foobar' } }
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
     assert_redirect user_session_path
   end
 
   test 'update action should throw permission denied when user not signed_in' do
     user = users(:one)
-    patch admin_user_url(user), params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
+    patch admin_user_url(user), params: { user: { email: 'xyz@abc.com', roles: 'editor', name: 'Foobar' } }
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
     assert_redirect user_session_path
   end
@@ -113,7 +113,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
   test 'admin create action should create new user' do
     sign_in users(:admin)
-    post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
+    post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor', name: 'Foobar' } }
     user = controller.instance_variable_get(:@user)
     assert_equal 'User Account Created.', flash[:success]
     assert_redirect admin_user_path(user)
@@ -122,14 +122,14 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   test 'admin create user should increase user count' do
     assert_difference('User.count', 1) do
       sign_in users(:admin)
-      post admin_users_url, params: { user: { email: 'xyz11@abc.com', roles: 'editor' } }
+      post admin_users_url, params: { user: { email: 'xyz11@abc.com', roles: 'editor', name: 'Foobar' } }
     end
   end
 
   test 'admin update action should update user' do
     user = users(:admin)
     sign_in users(:admin)
-    patch admin_user_url(user), params: { user: { email: 'xyzz@abc.com', roles: 'admin' } }
+    patch admin_user_url(user), params: { user: { email: 'xyzz@abc.com', roles: 'admin', name: 'Foobar' } }
     updated_user = controller.instance_variable_get(:@user)
     assert_equal user.id, updated_user.id
     assert_equal 'User Account Updated.', flash[:success]

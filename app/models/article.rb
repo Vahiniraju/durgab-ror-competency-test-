@@ -7,7 +7,7 @@ class Article < ApplicationRecord
 
   default_scope -> { where(archived: false) }
 
-  delegate :email, to: :user, prefix: true
+  delegate :name, :email, to: :user, prefix: true
   delegate :name, to: :category, prefix: true
 
   def self.n_article_ids_by_category(number = 3)
