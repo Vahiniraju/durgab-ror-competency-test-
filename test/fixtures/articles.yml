@@ -17,3 +17,21 @@ editor2_article:
   content: MyText
   category: politics
   user: editor2
+
+sport:
+  title: MyString
+  content: MyText
+  category: sports
+  user: editor2
+
+general:
+  title: MyString
+  content: MyText
+  category: general
+  user: editor2
+
+politics:
+  title: MyString
+  content: MyText
+  category: politics
+  user: editor2

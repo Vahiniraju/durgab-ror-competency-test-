@@ -1,6 +1,37 @@
-p
-  strong Email:
-  = @user.email
-p
-  strong Role:
-  = @user.role
+.card
+  .card-header
+    .row
+      .col-10
+        strong
+          = 'User'
+      .col-2
+        ul.nav.nav-pills.card-header-pills
+          li.nav-item.ml-3
+            -unless @user.archived
+              = link_to 'Archive', admin_archive_user_path(@user.id), method: :post,
+                      data: { confirm: "Are you sure, you want to archive the user with email?: #{@user.email}" },
+                      class: 'nav-link'
+          li.nav-item.actions
+            = link_to 'Edit', edit_admin_user_path(@user), class: 'nav-link'
+  .card-body
+    .row.form-group
+      strong.col-2
+        = 'Email :'
+      .col-10
+        = @user.email
+    .row.form-group
+      strong.col-2
+        = 'Role :'
+      .col-10
+        = @user.role
+    .row.form-group
+      strong.col-2
+        = 'Archived?'
+      .col-10
+        = @user.archived
+    br
+    = link_to 'Back to Users', admin_users_path
+br
+br
+br
+= render 'shared/show_articles', articles: @articles

@@ -15,8 +15,20 @@ class Admin::ArchiveArticlesControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     article = articles(:one)
     post admin_archive_article_url(article)
-    assert_redirected_to article_path(article)
+    assert_redirected_to articles_path
     assert_equal 'Article is archived.', flash[:success]
+    article.reload
+    assert_equal article.archived, true
+  end
+
+  test 'admin tries to archive article which is archived' do
+    sign_in users(:admin)
+    article = articles(:one)
+    article.archived = true
+    article.save
+    post admin_archive_article_url(article)
+    assert_redirected_to admin_user_path(article.user)
+    assert_equal 'Article is already archived.', flash[:alert]
     article.reload
     assert_equal article.archived, true
   end

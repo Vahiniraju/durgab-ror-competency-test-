@@ -23,6 +23,10 @@ class User < ApplicationRecord
     self.password = self.password_confirmation = hex
   end
 
+  def unscoped_articles
+    Article.unscoped.where(user_id: id)
+  end
+
   private
 
   def archive_articles

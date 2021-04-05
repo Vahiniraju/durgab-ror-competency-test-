@@ -9,6 +9,11 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
         ul.navbar-nav.mr-auto
           li.nav-item
             = link_to 'Users', admin_users_path, class: 'nav-link text-white'
+    -if logged_in?(:editor)
+      .collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            = link_to 'My Articles', editor_my_articles_index_path, class: 'nav-link text-white'
     ul.nav.justify-content-end
       -if @current_user
         li.nav-item

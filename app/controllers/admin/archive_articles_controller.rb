@@ -4,14 +4,14 @@ class Admin::ArchiveArticlesController < ApplicationController
 
   def create
     if @article.update(archived: true)
-      redirect_to article_path(@article), success: 'Article is archived.'
+      redirect_to articles_path, success: 'Article is archived.'
     else
       redirect_to article_path(@user), alert: 'Could not archive article.'
     end
   end
 
   def set_article
-    @article = Article.find params[:article_id]
-    return redirect_to root_path, alert: 'Article is already archived.' if @article.archived
+    @article = Article.unscoped.find params[:article_id]
+    return redirect_to admin_user_path(@article.user), alert: 'Article is already archived.' if @article.archived
   end
 end

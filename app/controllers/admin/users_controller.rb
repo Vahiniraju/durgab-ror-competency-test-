@@ -6,7 +6,9 @@ class Admin::UsersController < ApplicationController
     @users = User.all
   end
 
-  def show; end
+  def show
+    @articles = @user.unscoped_articles.includes(:category)
+  end
 
   def new
     @user = User.new

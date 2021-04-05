@@ -1,12 +1,34 @@
-p
-  strong Title:
-  = @article.title
-p
-  strong Category:
-  = @article.category.name
-p
-  strong Content:
-  = @article.content
-p
-  strong User:
-  = @article.user.email
+.card
+  .card-header
+    .row
+      .col-11
+        strong Article
+      -if @can_edit
+        .col-1
+          = link_to 'Edit', edit_article_url(@article)
+      -if @can_archive
+        .col-1
+          = link_to 'Archive', admin_archive_article_path(@article.id),  method: :post,
+                               data: { confirm: "Are you sure, you want to archive the title: #{@article.title}" }
+  .card-body
+    .row.form-group
+      .col-2
+        strong Title :
+      .col-10
+        = @article.title
+    .row.form-group
+      .col-2
+        strong Category :
+      .col-10
+        = @article.category.name
+    .row.form-group
+      .col-2
+        strong Content :
+      .col-10
+        = @article.content
+    .row.form-group
+      .col-2
+        strong By User :
+      .col-10
+        = @article.user.email
+    =link_to 'Back to Articles', articles_path

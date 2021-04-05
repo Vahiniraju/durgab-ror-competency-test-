@@ -11,7 +11,7 @@ class Admin::ArchiveUsersController < ApplicationController
   end
 
   def set_user
-    @user = User.unarchived.find params[:user_id]
-    return redirect_to root_path, alert: 'User is already archived.' unless @user
+    @user = User.find params[:user_id]
+    return redirect_to admin_user_path(@user), alert: 'User is already archived.' if @user.archived
   end
 end
