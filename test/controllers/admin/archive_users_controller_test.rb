@@ -6,10 +6,8 @@ class Admin::ArchiveUsersControllerTest < ActionDispatch::IntegrationTest
       sign_in users(user)
       article = articles(:one)
       post admin_archive_user_url(article.user.id)
-      assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
-      follow_redirect!
-      assert_response :success
+      assert_redirect root_path
     end
   end
 
@@ -17,10 +15,8 @@ class Admin::ArchiveUsersControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     article = articles(:one)
     post admin_archive_user_url(article.user.id)
-    assert_redirected_to admin_user_path(article.user)
     assert_equal 'User archived along with their articles.', flash[:success]
-    follow_redirect!
-    assert_response :success
+    assert_redirect admin_user_path(article.user)
     article.reload
     assert_equal article.archived, true
     assert_equal article.user.archived, true
@@ -32,11 +28,15 @@ class Admin::ArchiveUsersControllerTest < ActionDispatch::IntegrationTest
     user.archived = true
     user.save
     post admin_archive_user_url(user)
-    assert_redirected_to admin_user_path(user)
     assert_equal 'User is already archived.', flash[:alert]
-    follow_redirect!
-    assert_response :success
+    assert_redirect admin_user_path(user)
     user.reload
     assert_equal user.archived, true
+  end
+
+  def assert_redirect(path)
+    assert_redirected_to path
+    follow_redirect!
+    assert_response :success
   end
 end
