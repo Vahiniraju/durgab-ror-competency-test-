@@ -7,6 +7,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       get admin_users_url
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
 
     test "#{user} visit edit page should throw permission denied" do
@@ -15,6 +17,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       get edit_admin_user_url(local_user)
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
 
     test "#{user} visit new page should throw permission denied" do
@@ -22,6 +26,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       get new_admin_user_url
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
 
     test "#{user} create action should throw permission denied" do
@@ -29,6 +35,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
 
     test "#{user} update action should throw permission denied" do
@@ -37,6 +45,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       patch admin_user_url(local_user), params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
 
     test "#{user} show page should throw permission denied" do
@@ -45,6 +55,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       get admin_user_url(local_user)
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
   end
 
@@ -52,6 +64,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get admin_users_url
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'visit edit page should throw permission denied when user not signed_in' do
@@ -59,18 +73,24 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get edit_admin_user_url(user)
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'visit new page should throw permission denied when user not signed_in' do
     get new_admin_user_url
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'create action should throw permission denied when user not signed_in' do
     post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'update action should throw permission denied when user not signed_in' do
@@ -78,6 +98,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     patch admin_user_url(user), params: { user: { email: 'xyz@abc.com', roles: 'editor' } }
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'show page should throw permission denied when user not signed_in' do
@@ -85,6 +107,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get admin_user_url(user)
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'admin visit index page should have users instance variable' do
@@ -117,6 +141,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     user = controller.instance_variable_get(:@user)
     assert_redirected_to admin_user_path(user)
     assert_equal 'User Account Created.', flash[:success]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'admin create user should increase user count' do
@@ -134,6 +160,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal user.id, updated_user.id
     assert_redirected_to admin_user_path(user)
     assert_equal 'User Account Updated.', flash[:success]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'admin show page should user_info' do

@@ -7,6 +7,8 @@ class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
       get editor_my_articles_index_url
       assert_redirected_to root_path
       assert_equal 'Permission Denied', flash[:notice]
+      follow_redirect!
+      assert_response :success
     end
   end
 
@@ -14,6 +16,8 @@ class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
     get editor_my_articles_index_url
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
+    follow_redirect!
+    assert_response :success
   end
 
   test 'editor visit my controllers page' do
@@ -29,5 +33,7 @@ class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
     get editor_my_articles_index_url
     assert_redirected_to root_path
     assert_equal 'Permission Denied', flash[:notice]
+    follow_redirect!
+    assert_response :success
   end
 end
