@@ -7,7 +7,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @articles = @user.unscoped_articles.includes(:category)
+    @articles = @user.unscoped_articles
   end
 
   def new

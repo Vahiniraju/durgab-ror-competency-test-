@@ -5,34 +5,34 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  email: abc@xyz.com
+  email: foo@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
 #
 two:
-  email: abc1@xyz.com
+  email: bar@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
 #
 editor:
-  email: editor@xyz.com
+  email: editor@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   roles: editor
   confirmed_at: <%= Time.now %>
 #
 editor2:
-  email: editor2@xyz.com
+  email: editor2@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   roles: editor
   confirmed_at: <%= Time.now %>
 #
 admin:
-  email: admin@xyz.com
+  email: admin@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   roles: admin
   confirmed_at: <%= Time.now %>
 #
 user:
-  email: user@xyz.com
+  email: user@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
