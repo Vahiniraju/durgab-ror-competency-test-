@@ -7,8 +7,10 @@ class ArticlesController < ApplicationController
          [:editor] => %i[new edit destroy create update]
 
   def index
-    @articles = Article.all
-    @can_create_articles = logged_in?(:admin, :editor)
+    @articles = Article.all if current_user
+    @articles = Article.where(id: Article.n_article_ids_by_category) unless current_user
+    @articles = @articles.includes(:user, :category)
+    @can_create_articles = logged_in?(:editor)
   end
 
   def show; end

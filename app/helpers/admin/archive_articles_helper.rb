@@ -1,0 +1,2 @@
+module Admin::ArchiveArticlesHelper
+end

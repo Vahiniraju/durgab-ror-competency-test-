@@ -11,10 +11,21 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
+
   has_many :articles
+
+  scope :unarchived, -> { where(archived: false) }
+
+  after_commit :archive_articles, if: -> { archived }
 
   def set_password
     hex = SecureRandom.hex(10)
     self.password = self.password_confirmation = hex
+  end
+
+  private
+
+  def archive_articles
+    articles.update_all(archived: true)
   end
 end
