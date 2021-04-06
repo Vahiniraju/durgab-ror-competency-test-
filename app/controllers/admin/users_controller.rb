@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   access admin: %i[index show new create edit update]
 
   def index
-    @users = User.all.page(params[:page])
+    @users = User.all.where('email LIKE ?', "%#{search_field}%").page(params[:page])
   end
 
   def show
@@ -43,5 +43,9 @@ class Admin::UsersController < ApplicationController
   def set_user
     @user = User.find_by_id params[:id]
     return redirect_to admin_users_path, alert: 'Requested info not found' unless @user
+  end
+
+  def search_field
+    params.permit![:search_field]
   end
 end

@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
+  title: Senate Speech
   content: MyText
   category: politics
   user: editor
 
 two:
-  title: MyString2
+  title: Governer Races
   content: MyText2
   category: politics
   user: editor

@@ -178,6 +178,24 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_redirect articles_url
   end
 
+  %i[user admin editor].each do |user|
+    test "#{user} uses search bar" do
+      article = articles(:one)
+      sign_in users(user)
+      get articles_path, params: { search_field: article.title }
+      assert_equal controller.instance_variable_get(:@articles).total_count,
+                   Article.where('title LIKE ?', "%#{article.title}%").count
+      refute_equal controller.instance_variable_get(:@articles).total_count, Article.count
+    end
+
+    test "#{user} when no search word is given" do
+      sign_in users(:user)
+      get articles_path
+      assert_equal controller.instance_variable_get(:@articles).total_count,
+                   Article.count
+    end
+  end
+
   def assert_redirect(path)
     assert_redirected_to path
     follow_redirect!

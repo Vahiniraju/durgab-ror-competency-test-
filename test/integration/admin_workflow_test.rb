@@ -191,7 +191,8 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     assert_select 'div.card' do
       assert_select 'div.card-header', /User/
       assert_select 'div.card-header a[href=?][data-confirm=?][data-method=post]',
-                    admin_archive_user_path(to_be_updated_user), "Are you sure, you want to archive the user with email?: #{to_be_updated_user.email}"
+                    admin_archive_user_path(to_be_updated_user),
+                    "Are you sure, you want to archive the user with email?: #{to_be_updated_user.email}"
     end
     assert_select 'div.card-body' do
       assert_select 'div.row' do

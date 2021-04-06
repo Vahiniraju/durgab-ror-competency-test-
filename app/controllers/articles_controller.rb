@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
          [:editor] => %i[new edit destroy create update]
 
   def index
-    @articles = Article.all if current_user
+    @articles = Article.where('title LIKE ?', "%#{search_field}%") if current_user
     @articles = Article.where(id: Article.n_article_ids_by_category) unless current_user
     @articles = @articles.includes(:user, :category).page(params[:page])
     @can_create_articles = logged_in?(:editor)
@@ -73,5 +73,9 @@ class ArticlesController < ApplicationController
 
   def check_user_eligible
     @article.user.id == current_user.id && logged_in?(:editor)
+  end
+
+  def search_field
+    params.permit![:search_field]
   end
 end

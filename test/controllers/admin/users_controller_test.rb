@@ -146,6 +146,23 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template :show
   end
 
+  test 'uses search bar' do
+    user = users(:admin)
+    sign_in user
+    get admin_users_path, params: { search_field: user.email }
+    assert_equal controller.instance_variable_get(:@users).total_count,
+                 User.where('email LIKE ?', "%#{user.email}%").count
+    refute_equal controller.instance_variable_get(:@users).total_count, User.count
+  end
+
+  test 'when no search word is given' do
+    user = users(:admin)
+    sign_in user
+    get admin_users_path
+    assert_equal controller.instance_variable_get(:@users).total_count,
+                 User.count
+  end
+
   def assert_redirect(path)
     assert_redirected_to path
     follow_redirect!

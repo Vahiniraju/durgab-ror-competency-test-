@@ -36,4 +36,20 @@ class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
   end
+
+  test 'editor use search bar' do
+    article = articles(:one)
+    sign_in article.user
+    get editor_my_articles_index_url, params: { search_field: article.title }
+    assert_equal controller.instance_variable_get(:@articles).total_count,
+                 article.user.unscoped_articles.where('title LIKE ?', "%#{article.title}%").count
+  end
+
+  test 'editor when no search word is given' do
+    article = articles(:one)
+    sign_in article.user
+    get editor_my_articles_index_url
+    assert_equal controller.instance_variable_get(:@articles).total_count,
+                 article.user.unscoped_articles.count
+  end
 end

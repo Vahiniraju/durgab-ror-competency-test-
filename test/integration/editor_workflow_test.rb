@@ -103,7 +103,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
       end
 
       assert_select 'tbody tr' do
-        assert_select 'td', 'MyString2'
+        assert_select 'td', 'Governer Races'
         assert_select 'td', 'MyText2'
         assert_select 'td', 'politics'
         assert_select 'td', 'true'
@@ -112,7 +112,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
       end
 
       assert_select 'tbody tr' do
-        assert_select 'td', 'MyString'
+        assert_select 'td', 'Governer Races'
         assert_select 'td', 'MyText'
         assert_select 'td', 'politics'
         assert_select 'td', 'false'

@@ -1,10 +1,11 @@
+-if current_user
+  = render 'shared/search_box', place_holder: 'Search by Title', url: articles_path
 .card
   .card-header
     strong Articles
     -if @can_create_articles
       .float-right
         = link_to 'Create Article', new_article_path
-
 table.table
   thead
     tr

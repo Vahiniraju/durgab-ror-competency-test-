@@ -1,0 +1,5 @@
+= form_with url: url, method: :get, local: true, class: 'px-3' do  |f|
+  .input-group.mb-5
+    = f.text_field :search_field, class: 'form-control', maxlength: 20, value: params[:search_field], placeholder: place_holder
+    .input-group-append
+      = f.submit "Search", class: 'btn btn-primary'
