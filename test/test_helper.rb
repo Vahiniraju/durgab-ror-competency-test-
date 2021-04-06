@@ -14,4 +14,9 @@ class ActiveSupport::TestCase
   include Warden::Test::Helpers
 
   # Add more helper methods to be used by all tests here...
+  def assert_redirect(path)
+    assert_redirected_to path
+    follow_redirect!
+    assert_response :success
+  end
 end

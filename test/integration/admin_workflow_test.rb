@@ -25,6 +25,11 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
           assert_select 'td a[href=?]', edit_admin_user_path(user)
         end
       end
+
+      assert_select 'tfoot' do
+        assert_select 'span.current', '1'
+        assert_select 'span.next a[href=?]', '/admin/users?page=2'
+      end
     end
   end
 
@@ -51,9 +56,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     to_archive_user = users(:one)
     sign_in users(:admin)
     post admin_archive_user_path(to_archive_user)
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
+    assert_redirect(admin_user_path(to_archive_user))
     assert_select 'div.alert-success', /User archived along with their articles./
     assert_select 'div.card' do
       assert_select 'div.card-header', /User/
@@ -148,10 +151,8 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     user = users(:admin)
     sign_in user
     post admin_users_path params: { user: { email: 'new@example.com', name: 'New John Doe', role: 'user' } }
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
     new_user = User.where(email: 'new@example.com').first
+    assert_redirect(admin_user_path(new_user))
     assert_select 'div.alert-success', /User Account Created./
     assert_select 'div.card' do
       assert_select 'div.card-header', /User/
@@ -184,9 +185,7 @@ class AdminWorkflowTest < ActionDispatch::IntegrationTest
     to_be_updated_user = users(:one)
     sign_in user
     put admin_user_path(to_be_updated_user), params: { user: { id: to_be_updated_user.id, name: 'Updated Name' } }
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
+    assert_redirect(admin_user_path(to_be_updated_user))
     assert_select 'div.alert-success', /User Account Updated./
     assert_select 'div.card' do
       assert_select 'div.card-header', /User/

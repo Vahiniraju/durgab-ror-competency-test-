@@ -4,12 +4,11 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
     sign_in user
     post articles_path params: { article: { title: 'New Article', user_id: user.id, content: 'This is a new article',
                                             category_id: categories(:general).id } }
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
+    new_article = user.articles.where(title: 'New Article').first
+    assert_redirect(article_path(new_article))
     assert_select 'div.card' do
       assert_select 'div.card-header', /Article/
-      assert_select 'div.card-header a[href=?]', edit_article_url(Article.last)
+      assert_select 'div.card-header a[href=?]', edit_article_url(new_article)
       assert_select 'div.card-body' do
         assert_select 'div.row' do
           assert_select 'strong', /Title :/
@@ -55,9 +54,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
     sign_in user
     put article_path(article),
         params: { article: { id: article.id, title: 'Updated Title', content: 'This is updated content' } }
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
+    assert_redirect(article_path(article))
     assert_select 'div.card' do
       assert_select 'div.card-header', /Article/
       assert_select 'div.card-header a[href=?]', edit_article_url(article)
@@ -84,9 +81,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
     article = articles(:one)
     sign_in user
     delete article_path(article)
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
+    assert_redirect(articles_url)
     assert_select 'div.alert-success', /Article was successfully destroyed./
   end
 
@@ -150,6 +145,11 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
         assert_select 'td', 'sports'
         assert_select 'td', users(:editor2).name
         assert_select 'td a[href=?]', article_path(articles(:sport)), 'Show'
+      end
+
+      assert_select 'tfoot' do
+        assert_select 'span.current', '1'
+        assert_select 'span.next a[href=?]', '/?page=2'
       end
     end
   end

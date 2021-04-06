@@ -64,7 +64,7 @@ class ArticlesController < ApplicationController
   def can_edit?
     return redirect_to @article, notice: 'Permission Denied' unless check_user_eligible
 
-    return redirect_to @article, notice: 'Artilcle archived cannot be edited' if @article.archived
+    return redirect_to @article, notice: 'Archived article cannot be edited' if @article.archived
   end
 
   def can_destroy?
@@ -72,7 +72,7 @@ class ArticlesController < ApplicationController
   end
 
   def check_user_eligible
-    @article.user.id == current_user.id && logged_in?(:editor)
+    @article.user_id == current_user.id && logged_in?(:editor)
   end
 
   def search_field

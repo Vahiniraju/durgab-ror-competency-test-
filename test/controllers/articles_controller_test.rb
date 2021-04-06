@@ -195,10 +195,4 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
                    Article.count
     end
   end
-
-  def assert_redirect(path)
-    assert_redirected_to path
-    follow_redirect!
-    assert_response :success
-  end
 end
