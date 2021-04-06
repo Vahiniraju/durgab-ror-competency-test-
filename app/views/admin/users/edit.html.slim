@@ -1,6 +1,7 @@
 .card.custom-form
   .card-header
-    = 'Edit User'
+    strong
+      = 'Edit User'
   .card-body
     = render 'form', user: @user, url: admin_user_path
     = link_to 'Back to User', admin_user_path(@user)

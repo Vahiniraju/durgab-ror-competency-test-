@@ -1,1 +1,33 @@
-= render 'shared/show_articles', articles: @articles
+-if @articles.present?
+  .card
+    .card-header
+      strong My Articles
+      .float-right
+        = link_to 'Create Article', new_article_path
+  table.table
+    thead
+      tr
+        td colspan='4'
+          td.text-right{ colspan = '2' }= paginate(@articles)
+      tr
+        th scope='col' Title
+        th scope='col' Content
+        th scope='col' Category
+        th scope='col' Archived?
+        th scope='col' colspan="4"
+    tbody
+      - @articles.each do |article|
+        tr
+          td= article.title
+          td= article.content
+          td= article.category_name
+          td= article.archived
+          td= link_to 'Show', article
+          -if !article.archived
+            td= link_to 'Edit', edit_article_path(article.id)
+          -else
+            td
+    tfoot
+      tr
+        td colspan='4'
+          td.text-right{ colspan = '2' }= paginate(@articles)

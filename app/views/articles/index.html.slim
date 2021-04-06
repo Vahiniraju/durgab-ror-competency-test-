@@ -4,8 +4,12 @@
     -if @can_create_articles
       .float-right
         = link_to 'Create Article', new_article_path
+
 table.table
   thead
+    tr
+      td colspan='4'
+        td.text-right{ colspan = '2' }= paginate(@articles)
     tr
       th scope='col' Title
       th scope='col' Content
@@ -23,3 +27,7 @@ table.table
         -if logged_in?(:admin)
           td= link_to 'Archive', admin_archive_article_path(article.id), method: :post,
                   data: { confirm: "Are you sure, you want to archive the title: #{article.title}" }
+  tfoot
+    tr
+      td colspan='4'
+        td.text-right{ colspan = '2' }=paginate(@articles)

@@ -1,15 +1,19 @@
 .card
   .card-header
     .row
-      .col-11
+      .col-10
         strong Article
       -if @can_edit
         .col-1
-          = link_to 'Edit', edit_article_url(@article)
-      -if @can_archive
+          -if !@article.archived
+            = link_to 'Edit', edit_article_url(@article)
         .col-1
+          = link_to 'Delete', article_path(@article), class: 'text-danger', method: :delete,
+                  data: { confirm: "Are you sure, you want to delete article with title #{@article.title}"}
+      -if @can_archive
+        .col-2.text-right
           = link_to 'Archive', admin_archive_article_path(@article.id),  method: :post,
-                               data: { confirm: "Are you sure, you want to archive the title: #{@article.title}" }
+                               data: { confirm: "Are you sure, you want to archive article with title: #{@article.title}" }
   .card-body
     .row.form-group
       .col-2
@@ -31,4 +35,10 @@
         strong By User :
       .col-10
         = @article.user_name
+    -if logged_in?(:admin) || @can_edit
+      .row.form-group
+        .col-2
+          strong Archived? :
+        .col-10
+          = @article.archived
     =link_to 'Back to Articles', articles_path

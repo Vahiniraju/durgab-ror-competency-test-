@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all if current_user
     @articles = Article.where(id: Article.n_article_ids_by_category) unless current_user
-    @articles = @articles.includes(:user, :category)
+    @articles = @articles.includes(:user, :category).page(params[:page])
     @can_create_articles = logged_in?(:editor)
   end
 
@@ -53,7 +53,7 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article = Article.find_by_id(params[:id])
-    @article = Article.unscoped.find_by_id(params[:id]) if logged_in?(:admin) && !@article
+    @article = Article.unscoped.find_by_id(params[:id]) if logged_in?(:admin, :editor) && !@article
     return redirect_to root_path, alert: 'Article not found or its archived by admin' unless @article
   end
 
@@ -63,6 +63,8 @@ class ArticlesController < ApplicationController
 
   def can_edit?
     return redirect_to @article, notice: 'Permission Denied' unless check_user_eligible
+
+    return redirect_to @article, notice: 'Artilcle archived cannot be edited' if @article.archived
   end
 
   def can_destroy?

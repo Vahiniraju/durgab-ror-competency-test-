@@ -2,7 +2,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
   test 'should be able to see all my articles' do
     sign_in users(:editor)
     get editor_my_articles_index_url
-    assert_select 'div.card strong', 'User Articles'
+    assert_select 'div.card strong', 'My Articles'
     assert_select 'table' do
       assert_select 'thead tr' do
         assert_select 'th', 'Title'
@@ -16,7 +16,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
         assert_select 'td', 'MyText2'
         assert_select 'td', 'politics'
         assert_select 'td', 'true'
-        assert_select 'td a[href=?]', article_path(articles(:two)), count: 0
+        assert_select 'td a[href=?]', article_path(articles(:two)), 'Show'
         assert_select 'td a[href=?]', edit_article_path(articles(:two)), count: 0
       end
 

@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   access admin: %i[index show new create edit update]
 
   def index
-    @users = User.all
+    @users = User.all.page(params[:page])
   end
 
   def show
@@ -41,6 +41,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find params[:id]
+    @user = User.find_by_id params[:id]
+    return redirect_to admin_users_path, alert: 'Requested info not found' unless @user
   end
 end

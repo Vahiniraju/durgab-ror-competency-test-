@@ -25,6 +25,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test 'only shows 3 record of each category when not logged in' do
     user = users(:editor)
+    Article.destroy_all
     %i[sports general politics].each do |cat|
       category = categories(cat)
       4.times do
@@ -32,9 +33,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       end
     end
     get articles_url
-    assert_equal controller.instance_variable_get(:@articles).includes(:user, :category),
-                 Article.where(id: Article.n_article_ids_by_category).includes(:user, :category)
-    assert_equal controller.instance_variable_get(:@articles).size, 9
+    assert_equal controller.instance_variable_get(:@articles).total_count, 9
   end
 
   %i[user admin editor].each do |user|

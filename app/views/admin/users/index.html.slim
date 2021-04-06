@@ -6,12 +6,14 @@
 table.table
   thead
     tr
+      td colspan='4'
+        td.text-right{ colspan = '2' }= paginate(@users)
+    tr
       th scope="col" Email
       th scope="col" Name
       th scope="col" Role
       th scope="col" Archived?
-      th scope="col"
-      th scope="col"
+      th colspan='2'
   tbody
     - @users.each do |user|
       tr
@@ -21,3 +23,7 @@ table.table
         td= user.archived
         td= link_to 'Show', admin_user_path(user)
         td= link_to 'Edit', edit_admin_user_path(user)
+  tfoot
+    tr
+      td colspan='4'
+        td.text-right{ colspan = '2' }= paginate(@users)

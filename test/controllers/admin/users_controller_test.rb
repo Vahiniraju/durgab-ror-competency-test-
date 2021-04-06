@@ -87,11 +87,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirect user_session_path
   end
 
-  test 'admin visit index page should have users instance variable' do
+  test 'admin visit index page should have users equal to User.count' do
     sign_in users(:admin)
     get admin_users_url
     assert_response :success
-    assert_equal controller.instance_variable_get(:@users), User.all
+    assert_equal controller.instance_variable_get(:@users).total_count, User.count
     assert_template :index
   end
 
@@ -104,13 +104,14 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template :edit
   end
 
-  test 'admin visit new page should throw permission denied when user not signed_in' do
+  test 'admin visit new page should have user instance variable' do
     sign_in users(:admin)
     get new_admin_user_url
     assert_response :success
     assert_instance_of User, controller.instance_variable_get(:@user)
     assert_template :new
   end
+
   test 'admin create action should create new user' do
     sign_in users(:admin)
     post admin_users_url, params: { user: { email: 'xyz@abc.com', roles: 'editor', name: 'Foobar' } }

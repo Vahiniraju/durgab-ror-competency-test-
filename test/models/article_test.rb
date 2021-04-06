@@ -91,4 +91,16 @@ class ArticleTest < ActiveSupport::TestCase
     article = articles(:one)
     assert_equal article.user.class, User
   end
+
+  test 'n_article_ids_by_category' do
+    user = users(:one)
+    Article.destroy_all
+    %i[sports general politics].each do |cat|
+      category = categories(cat)
+      4.times do
+        Article.create(title: 'title', content: 'content', category_id: category.id, user_id: user.id)
+      end
+    end
+    assert Article.n_article_ids_by_category.count, 9
+  end
 end
