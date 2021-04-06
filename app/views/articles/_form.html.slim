@@ -8,6 +8,6 @@
     = form.select :category_id, options_for_category(article.category), {} ,class: 'custom-select'
   .form-group
     = form.label :content
-    = form.text_area :content, class: 'form-control'
+    = form.text_area :content, class: 'form-control', rows: 10
   .form-check
     = form.submit 'Submit', class: 'btn btn-primary float-right'

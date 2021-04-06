@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  extend ActiveModel::Callbacks
   ############################################################################################
   ## PeterGate Roles                                                                        ##
   ## The :user role is added by default and shouldn't be included in this list.             ##
@@ -18,7 +19,14 @@ class User < ApplicationRecord
 
   scope :unarchived, -> { where(archived: false) }
 
-  after_commit :archive_articles, if: -> { archived }
+  define_model_callbacks :archive, :only => [:after]
+  after_archive :archive_articles
+
+  def archive
+    run_callbacks :archive do
+      update_attribute(:archived, true)
+    end
+  end
 
   def set_password
     hex = SecureRandom.hex(10)

@@ -3,7 +3,7 @@ class Admin::ArchiveArticlesController < ApplicationController
   access admin: %i[create]
 
   def create
-    if @article.update(archived: true)
+    if @article.archive
       redirect_to articles_path, success: 'Article is archived.'
     else
       redirect_to article_path(@user), alert: 'Could not archive article.'

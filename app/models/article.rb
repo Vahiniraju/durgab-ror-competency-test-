@@ -17,4 +17,8 @@ class Article < ApplicationRecord
     result = ActiveRecord::Base.connection.execute(sql_query)
     result.map { |article| article['id'] }
   end
+
+  def archive
+    update_attribute(:archived, true)
+  end
 end

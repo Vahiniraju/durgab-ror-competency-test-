@@ -30,8 +30,7 @@ class UserTest < ActiveSupport::TestCase
     user = users(:editor2)
     assert_includes user.unscoped_articles.pluck(:archived).uniq, true
     assert_includes user.unscoped_articles.pluck(:archived).uniq, false
-    user.archived = true
-    user.save
+    user.archive
     assert_includes user.unscoped_articles.pluck(:archived).uniq, true
     assert_not_includes user.unscoped_articles.pluck(:archived).uniq, false
   end
