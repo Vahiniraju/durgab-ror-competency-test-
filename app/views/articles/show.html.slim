@@ -38,7 +38,7 @@
     -if logged_in?(:admin) || @can_edit
       .row.form-group
         .col-2
-          strong Archived? :
+          strong Archived :
         .col-10
           = @article.archived
     =link_to 'Back to Articles', articles_path

@@ -8,7 +8,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
         assert_select 'th', 'Title'
         assert_select 'th', 'Content'
         assert_select 'th', 'Category'
-        assert_select 'th', 'Archived?'
+        assert_select 'th', 'Archived'
       end
 
       assert_select 'tbody tr' do
