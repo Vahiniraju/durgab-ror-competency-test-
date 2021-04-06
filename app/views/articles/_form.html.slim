@@ -2,7 +2,7 @@
   = render "shared/error_messages", resource: article
   .form-group
     = form.label :title
-    = form.text_field :title, class: 'form-control', maxlength: 25
+    = form.text_field :title, class: 'form-control'
   .form-group
     = form.label :category_id, 'Category'
     = form.select :category_id, options_for_category(article.category), {} ,class: 'custom-select'
