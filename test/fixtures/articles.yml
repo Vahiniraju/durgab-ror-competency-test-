@@ -7,10 +7,11 @@ one:
   user: editor
 
 two:
-  title: MyString
-  content: MyText
+  title: MyString2
+  content: MyText2
   category: politics
   user: editor
+  archived: true
 
 editor2_article:
   title: MyString

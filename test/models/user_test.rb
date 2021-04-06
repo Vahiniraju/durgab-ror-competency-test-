@@ -6,6 +6,12 @@ class UserTest < ActiveSupport::TestCase
     assert_includes user.unscoped_articles, articles(:archived)
   end
 
+  test 'user should not be valid if no name' do
+    user = users(:one)
+    user.name = nil
+    refute user.valid?
+  end
+
   test 'unscoped_articles return empty array when not found' do
     user = users(:admin)
     assert_equal user.unscoped_articles, []

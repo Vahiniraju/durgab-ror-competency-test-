@@ -1,5 +1,7 @@
 .card.custom-form
   .card-header
     | Edit Article
+  .card-body
     =render 'form', article: @article
-    = link_to 'Back to Articles', articles_path
+  br
+  = link_to 'Back to Articles', articles_path
