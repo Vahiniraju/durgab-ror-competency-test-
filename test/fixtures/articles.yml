@@ -20,8 +20,8 @@ editor2_article:
   user: editor2
 
 sport:
-  title: MyString
-  content: MyText
+  title: sportsTitle
+  content: sportsContent
   category: sports
   user: editor2
 

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
   %i[user admin].each do |user|
-    test "#{user} visit my articles page should return permission denied" do
+    test "permission denied when #{user} visits my articles page" do
       sign_in users(user)
       get editor_my_articles_index_url
       assert_redirected_to root_path
@@ -12,7 +12,7 @@ class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'user with no login visit my articles page' do
+  test 'a user who is not logged in cannot access index page' do
     get editor_my_articles_index_url
     assert_redirected_to user_session_path
     assert_equal 'You need to sign in or sign up before continuing.', flash[:alert]
@@ -20,7 +20,7 @@ class Editor::MyArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'editor visit my controllers page' do
+  test 'only editor can access index page' do
     editor = users(:editor)
     sign_in editor
     get editor_my_articles_index_url
