@@ -6,6 +6,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
                                             category_id: categories(:general).id } }
     new_article = user.articles.where(title: 'New Article').first
     assert_redirect(article_path(new_article))
+    assert_select 'div.alert-success', /Article was successfully created./
     assert_select 'div.card' do
       assert_select 'div.card-header', /Article/
       assert_select 'div.card-header a[href=?]', edit_article_url(new_article)
@@ -55,6 +56,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
     put article_path(article),
         params: { article: { id: article.id, title: 'Updated Title', content: 'This is updated content' } }
     assert_redirect(article_path(article))
+    assert_select 'div.alert-success', /Article was successfully updated./
     assert_select 'div.card' do
       assert_select 'div.card-header', /Article/
       assert_select 'div.card-header a[href=?]', edit_article_url(article)
@@ -89,6 +91,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
     sign_in users(:editor)
     get editor_my_articles_index_url
     assert_select 'div.card strong', 'My Articles'
+    assert_select 'div.card-header a[href=?]', new_article_path, 'Create Article'
     assert_select 'table' do
       assert_select 'thead tr' do
         assert_select 'th', 'Title'
@@ -121,6 +124,7 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
     sign_in users(:editor2)
     get articles_url
     assert_select 'div.card strong', 'Articles'
+    assert_select 'div.card-header a[href=?]', new_article_path, 'Create Article'
     assert_select 'table' do
       assert_select 'thead tr' do
         assert_select 'th', 'Title'
@@ -152,5 +156,21 @@ class EditorWorkflowTest < ActionDispatch::IntegrationTest
         assert_select 'span.next a[href=?]', '/?page=2'
       end
     end
+  end
+
+  test 'archived editor accesses my articles page' do
+    archived_user = users(:archivedUser)
+    sign_in archived_user
+
+    get editor_my_articles_index_url
+    assert_select 'div.card strong', 'My Articles'
+    assert_select 'div.card-header a[href=?]', new_article_path, count: 0
+  end
+
+  test 'archived editor accesses home page' do
+    sign_in users(:archivedUser)
+    get articles_url
+    assert_select 'div.card strong', 'Articles'
+    assert_select 'div.card-header a[href=?]', new_article_path, count: 0
   end
 end

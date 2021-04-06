@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
   before_action :set_article, only: %i[show edit update destroy]
+  before_action :can_create?, only: %i[create]
   before_action :can_edit?, only: %i[edit update]
   before_action :can_destroy?, only: :destroy
   access all: [:index], %i[user admin editor] => %i[index show],
@@ -10,7 +11,7 @@ class ArticlesController < ApplicationController
     @articles = Article.where('title LIKE ?', "%#{search_field}%") if current_user
     @articles = Article.where(id: Article.n_article_ids_by_category) unless current_user
     @articles = @articles.includes(:user, :category).page(params[:page])
-    @can_create_articles = logged_in?(:editor)
+    @can_create_articles = logged_in?(:editor) && !current_user.archived
   end
 
   def show
@@ -59,6 +60,10 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :content, :category_id)
+  end
+
+  def can_create?
+    return redirect_to root_path, notice: 'Permission Denied' if current_user.archived
   end
 
   def can_edit?

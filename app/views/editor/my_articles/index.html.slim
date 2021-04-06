@@ -3,8 +3,9 @@
 .card
   .card-header
     strong My Articles
-    .float-right
-      = link_to 'Create Article', new_article_path
+    -unless current_user.archived
+      .float-right
+        = link_to 'Create Article', new_article_path
   -if @articles.present?
     table.table
       thead
@@ -21,7 +22,7 @@
         - @articles.each do |article|
           tr
             td= article.title
-            td= article.content
+            td= truncate(article.content, length: 30)
             td= article.category_name
             td= article.archived
             td= link_to 'Show', article

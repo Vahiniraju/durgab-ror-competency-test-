@@ -14,7 +14,7 @@
       - articles.each do |article|
         tr
           td= article.title
-          td= article.content
+          td= truncate(article.content, length: 30)
           td= article.category_name
           td= article.archived
           -if !article.archived && logged_in?(:admin)

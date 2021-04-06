@@ -42,3 +42,11 @@ user:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
   name: Username
+
+archivedUser:
+  email: archiveduser@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  confirmed_at: <%= Time.now %>
+  roles: editor
+  archived: true
+  name: Archived User

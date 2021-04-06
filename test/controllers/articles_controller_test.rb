@@ -97,6 +97,13 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_redirect article_url(article)
   end
 
+  test 'archived editor cannot create article' do
+    sign_in users(:archivedUser)
+    post articles_path, params: { article: { title: 'updated', content: 'xyz', category_id: categories(:sports).id } }
+    assert_equal 'Permission Denied', flash[:notice]
+    assert_redirect root_path
+  end
+
   test 'editor can visit edit page of their article' do
     sign_in users(:editor)
     article = articles(:one)
