@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   scope :unarchived, -> { where(archived: false) }
 
-  define_model_callbacks :archive, :only => [:after]
+  define_model_callbacks :archive, only: [:after]
   after_archive :archive_articles
 
   def archive
